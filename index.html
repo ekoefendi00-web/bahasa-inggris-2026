@@ -87,7 +87,7 @@
 </div>
 
 <script>
-    const DATABASE_URL = "https://script.google.com/macros/s/AKfycbzLAXXNJe3dHsdHjzcKuBhIKb0WX3Rc6uEo0K-mYF3KbDLZkcONi6LwYQxSQ7aP-_VMfQ/exec";
+    const DATABASE_URL = "https://script.google.com/macros/s/AKfycbwWc1Iv-599V98aLY4oeKSXH0dFK4Dms2HDLAbRXJcPEtmqMiRX9eYKvyRiq_kqzOOyKg/exec";
 
     const quizData = [
         { q: "“I see sunset in the evening.” <br> Please translate the sentence in Indonesia", image: "", options: {a: "Aku melihat matahari bersinar", b: "Aku sarapan setiap sore", c: "Aku melihat matahari terbenam", d: "Aku tidur pada sore hari"}, ans: "c" },
@@ -240,7 +240,7 @@
         document.getElementById('final-score').innerText = score;
 
         // Kirim ke Google Sheets (Hanya jika URL sudah diisi)
-        if(DATABASE_URL !== "https://script.google.com/macros/s/AKfycbzLAXXNJe3dHsdHjzcKuBhIKb0WX3Rc6uEo0K-mYF3KbDLZkcONi6LwYQxSQ7aP-_VMfQ/exec") {
+        if(DATABASE_URL !== "https://script.google.com/macros/s/AKfycbwWc1Iv-599V98aLY4oeKSXH0dFK4Dms2HDLAbRXJcPEtmqMiRX9eYKvyRiq_kqzOOyKg/exec") {
             fetch(DATABASE_URL, {
                 method: 'POST',
                 mode: 'no-cors',
