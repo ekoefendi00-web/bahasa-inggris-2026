@@ -50,6 +50,130 @@
         input#username { width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 8px; border: 2px solid #ddd; font-size: 1rem; box-sizing: border-box; }
     </style>
 </head>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSK Bahasa Inggris 2026</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #3498db;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; margin: 0; padding: 20px; }
+        
+        .quiz-container { 
+            max-width: 800px; 
+            margin: auto; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+        }
+
+        .logo-header { 
+            display: block; 
+            margin: 0 auto 15px; 
+            max-width: 100px; 
+            height: auto; 
+        }
+
+        /* Ukuran logo lebih kecil saat mengerjakan soal agar hemat ruang */
+        #quiz-screen .logo-header { max-width: 70px; margin-bottom: 10px; }
+
+        hr { border: 0; height: 1px; background: #ddd; margin: 20px 0; }
+        .hidden { display: none; }
+
+        #timer-wrapper { 
+            background: var(--primary); 
+            color: white; 
+            padding: 10px; 
+            border-radius: 8px; 
+            text-align: center; 
+            font-size: 1.2rem; 
+            font-weight: bold; 
+            margin-bottom: 20px;
+        }
+
+        .passage { 
+            background: #f9f9f9; 
+            padding: 15px; 
+            border-left: 5px solid var(--accent); 
+            margin-bottom: 20px; 
+            line-height: 1.6;
+        }
+
+        .question-image { 
+            display: block; 
+            max-width: 100%; 
+            height: auto; 
+            margin: 15px auto; 
+            border-radius: 8px; 
+        }
+
+        .question-text { font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; color: var(--primary); }
+
+        .option { 
+            display: block; 
+            width: 100%; 
+            text-align: left; 
+            padding: 12px 15px; 
+            margin-bottom: 10px; 
+            border: 2px solid #eee; 
+            border-radius: 8px; 
+            background: white; 
+            cursor: pointer; 
+            transition: 0.2s;
+        }
+
+        .option:hover { background: #f0f7ff; border-color: var(--accent); }
+        .option.selected { background: var(--accent); color: white; border-color: var(--accent); }
+
+        .btn-group { display: flex; justify-content: space-between; margin-top: 30px; gap: 10px; }
+        .btn { padding: 12px 25px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-secondary { background: #95a5a6; color: white; }
+
+        .nav-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(35px, 1fr)); 
+            gap: 8px; 
+            margin-top: 30px; 
+            padding-top: 20px; 
+            border-top: 1px solid #eee;
+        }
+
+        .nav-num { 
+            height: 35px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 0.9rem;
+        }
+
+        .nav-num.answered { background: var(--success); color: white; border-color: var(--success); }
+        .nav-num.current { border: 2px solid var(--primary); font-weight: bold; transform: scale(1.1); }
+
+        input[type="text"] { 
+            width: 100%; 
+            padding: 12px; 
+            margin-bottom: 15px; 
+            border: 1px solid #ccc; 
+            border-radius: 6px; 
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+    </style>
+</head>
 <body>
 
 <div class="quiz-container">
@@ -64,6 +188,8 @@
     </div>
 
     <div id="quiz-screen" class="hidden">
+        <img src="https://awsimages.detik.net.id/community/media/visual/2023/05/02/lambang-tut-wuri-handayani.png?w=700&q=90" class="logo-header" alt="Logo">
+        
         <div id="timer-wrapper"><div id="timer-display">20:00</div></div>
         <div id="progress" style="margin-bottom:15px; font-weight:bold; color: var(--primary);"></div>
         
@@ -80,6 +206,7 @@
     </div>
 
     <div id="result-screen" class="hidden" style="text-align:center">
+        <img src="https://awsimages.detik.net.id/community/media/visual/2023/05/02/lambang-tut-wuri-handayani.png?w=700&q=90" class="logo-header" alt="Logo">
         <h2>Selesai! Skor Anda:</h2>
         <h1 id="final-score" style="font-size: 5rem; color: var(--success);">0</h1>
         <p id="status-upload" style="font-weight:bold;"></p>
@@ -88,7 +215,6 @@
 </div>
 
 <script>
-    // --- GANTI URL DI BAWAH INI JIKA ANDA MELAKUKAN DEPLOY ULANG ---
     const DATABASE_URL = "https://script.google.com/macros/s/AKfycbwKO1xOJIPSCASJU1oab0Vj4pZc4Lf6FTl03ryO9bYhC57xDzQ5WtUSNaISmrz7VPJELA/exec";
 
     const quizData = [
@@ -237,10 +363,8 @@
         let score = Math.round((correctCount / quizData.length) * 100);
         document.getElementById('final-score').innerText = score;
 
-        // PROSES PENGIRIMAN NILAI
         if(DATABASE_URL && DATABASE_URL.includes("script.google.com")) {
             document.getElementById('status-upload').innerText = "⏳ Sedang mengirim nilai...";
-            
             fetch(DATABASE_URL, {
                 method: 'POST',
                 mode: 'no-cors',
